@@ -9,11 +9,13 @@ python zipcrack.py -d dictionary -f zipfile
 #Requires:
 
 Progressbar
+
 PyFiglet
 
 #Installation:
 
 Clone repository (git clone https://github.com/norksec/zipcrack.git)
+
 Install required packages (pip install pyfiglet progressbar)
 
 #Finally...
