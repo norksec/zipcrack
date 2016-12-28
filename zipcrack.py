@@ -2,6 +2,7 @@ import os
 import sys
 import zipfile
 import time
+import atexit
 from progressbar import Bar, AnimatedMarker, ProgressBar, Percentage, RotatingMarker, ETA
 from optparse import OptionParser
 from threading import Thread
@@ -10,16 +11,20 @@ from pyfiglet import Figlet
 def cls():
 	os.system('cls' if os.name=='nt' else 'clear')
 
+def exit_handler():
+	print '\n[\033[1;31;40m~\033[1;37;40m] Exiting...\n'
+
 def intro():
 	cls()
 	f = Figlet(font='graffiti')
-	print f.renderText('zipCrack')
-	print '\033[1;32;40m(c) 2016 NORKSEC - No rights reserved\033[1;37;40m'+'\n'
+	print f.renderText('NoRKSEC')
+	print '\033[1;32;40mzipCrack.py - (c) 2016 NORKSEC - No rights reserved\033[1;37;40m'+'\n'
 	
 def extractFile(zFile, password):
 	try:
 		zFile.extractall(pwd=password)
-		print '\n\n[\033[1;31;40m+\033[1;37;40m] Found password: [\033[1;31;40m' + password + '\033[1;37;40m] - exiting...\n\n'
+		print '\n\n[\033[1;31;40m+\033[1;37;40m] Found password: [\033[1;31;40m' + password + '\033[1;37;40m]'
+		exit_handler()
 		os._exit(0)
 	except:
 		pass
@@ -31,6 +36,7 @@ def fileLen(fname):
 	return i + 1
 
 def main():
+	atexit.register(exit_handler)
 	parser = OptionParser(usage="usage: %prog -f <zipfile> -d <dictionary>", version="%prog 1.0")
 	parser.add_option('-f', dest='zname', type='string', help='specify zip file')
 	parser.add_option('-d', dest='dname', type='string', help='specify dictionary file')
@@ -66,7 +72,7 @@ def main():
 			os._exit(1)
 	pbar.finish()
 	time.sleep(2)
-	print '\n[\033[1;31;40m-\033[1;37;40m] Password not found in \033[1;31;40m' + dname + '\033[1;37;40m. Exiting...\n'
+	print '\n[\033[1;31;40m-\033[1;37;40m] Password not found in \033[1;31;40m' + dname + '\033[1;37;40m.\n'
 	sys.exit(1)
 
 if __name__ == '__main__':
