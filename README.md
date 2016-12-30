@@ -1,4 +1,4 @@
-# zipCrack
+# zipcrack.py
 
 A simple zip cracking tool written in Python.
 
