@@ -8,7 +8,7 @@ python zipcrack.py -d dictionary -f zipfile
 
 #Requires:
 
-Progressbar
+tqdm
 
 PyFiglet
 
@@ -16,7 +16,7 @@ PyFiglet
 
 Clone repository (git clone https://github.com/norksec/zipcrack.git)
 
-Install required packages (pip install pyfiglet progressbar)
+Install required packages (pip install pyfiglet tqdm)
 
 #Finally...
 

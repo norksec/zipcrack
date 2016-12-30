@@ -3,7 +3,7 @@ import sys
 import zipfile
 import time
 import atexit
-from progressbar import Bar, AnimatedMarker, ProgressBar, Percentage, RotatingMarker, ETA
+from tqdm import *
 from optparse import OptionParser
 from threading import Thread
 from pyfiglet import Figlet
@@ -57,20 +57,14 @@ def main():
 	zFile = zipfile.ZipFile(zname)
 	passFile = open(dname)
 	lineMax = fileLen(dname)
-	pbar = ProgressBar(widgets=['\033[1;32;40mCracking:\033[1;37;40m  ', Percentage(), ' ', Bar(marker=RotatingMarker()), ' ', ETA()], maxval=lineMax)
 	print '[\033[1;31;40m+\033[1;37;40m] Testing \033[1;31;40m' + str(lineMax) + '\033[1;37;40m passwords from dictionary file.\n'
-	i = 0
-	pbar.start()
-	for line in passFile.readlines():
+	for line in tqdm(passFile.readlines(), total=lineMax):
 		password = line.strip('\n')
 		t = Thread(target=extractFile, args=(zFile, password))
-		pbar.update(i+1)
-		i = i+1
 		try:
 			t.start()
 		except (KeyboardInterrupt, SystemExit):
 			os._exit(1)
-	pbar.finish()
 	time.sleep(2)
 	print '\n[\033[1;31;40m-\033[1;37;40m] Password not found in \033[1;31;40m' + dname + '\033[1;37;40m.\n'
 	sys.exit(1)
